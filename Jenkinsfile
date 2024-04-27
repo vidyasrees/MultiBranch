@@ -1,0 +1,25 @@
+@Library('newlibrary')_
+node('built-in')
+{
+    stage('ContDownload_Master')
+    {
+        cicd.newGit("https://github.com/vidyasrees/maven.git")
+    }
+    stage('ContBuild_Master')
+    {
+        cicd.newMaven()
+    }
+    stage('ContDeployment_Master')
+    {
+        cicd.newDeploy("ScriptedPipelineSharedLibraries","172.31.5.63","Testapp")
+    }
+    stage('ContTesting_Master')
+    {
+        cicd.newGit("https://github.com/vidyasrees/functionaltesting.git")
+        cicd.runSelenium("ScriptedPipelineSharedLibraries")
+    }
+    stage('ContDelivery_Master')
+    {
+        cicd.newDeploy("ScriptedPipelineSharedLibraries","172.31.3.151","Prodapp")
+    }
+}
