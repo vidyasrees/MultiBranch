@@ -1,25 +1,13 @@
 @Library('library')_
 node('built-in')
 {
-    stage('ContinuousDownload_Master')
+    stage('ContinuousDownload_Loans')
     {
         cicd.newGit("maven")
     }
-    stage('ContinuousBuild_Master')
+    stage('ContinuousBuild_Loans')
     {
         cicd.newMaven()
     }
-    stage('ContinuousDeployment_Master')
-    {
-        cicd.newDeploy("ScriptedPipelineSharedLibraries","172.31.13.241","testapp")
-    }
-    stage('ContinuousTesting_Master')
-    {
-        cicd.newGit("functionaltesting")
-        cicd.runSelenium("ScriptedPipelineSharedLibraries")
-    }
-    stage('ContinuousDelivery_Master')
-    {
-        cicd.newDeploy("ScriptedPipelineSharedLibraries","172.31.10.80","prodapp")
-    }
+   }
 }
